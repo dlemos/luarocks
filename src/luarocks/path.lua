@@ -4,6 +4,7 @@
 -- point where the layout of the local installation is defined in LuaRocks.
 local path = {}
 
+local fs = require("luarocks.fs")
 local core = require("luarocks.core.path")
 local dir = require("luarocks.dir")
 local cfg = require("luarocks.core.cfg")
@@ -257,6 +258,49 @@ function path.package_paths(deps_mode)
       table.insert(lcpaths, dir.path(root, cfg.lib_modules_path, "?." .. cfg.lib_extension))
    end)
    return table.concat(lpaths, ";"), table.concat(lcpaths, ";")
+end
+
+--- Check if user has write permissions for the command.
+-- Assumes the configuration variables under cfg have been previously set up.
+-- @param args table: the args table passed to run() drivers.
+-- @return boolean or (boolean, string): true on success, false on failure,
+-- plus an error message.
+function path.check_command_permissions(args)
+   local ok = true
+   local err = ""
+   for _, directory in ipairs { cfg.rocks_dir, cfg.deploy_lua_dir, cfg.deploy_bin_dir, cfg.deploy_lua_dir } do
+      if fs.exists(directory) then
+         if not fs.is_writable(directory) then
+            ok = false
+            err = "Your user does not have write permissions in " .. directory
+            break
+         end
+      else
+         local root = fs.root_of(directory)
+         local parent = directory
+         repeat
+            parent = dir.dir_name(parent)
+            if parent == "" then
+               parent = root
+            end
+         until parent == root or fs.exists(parent)
+         if not fs.is_writable(parent) then
+            ok = false
+            err = directory.." does not exist and your user does not have write permissions in " .. parent
+            break
+         end
+      end
+   end
+   if ok then
+      return true
+   else
+      if args["local"] or cfg.local_by_default then
+         err = err .. " \n-- please check your permissions."
+      else
+         err = err .. " \n-- you may want to run as a privileged user or use your local tree with --local."
+      end
+      return nil, err
+   end
 end
 
 return path
