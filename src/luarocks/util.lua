@@ -646,4 +646,15 @@ function util.remove_doc_dir(name, version)
    end
 end
 
+-- Wrapper function for fs.is_tool_available
+function util.is_tool_available(tool_cmd, tool_name, arg)
+   if fs.is_tool_available(tool_cmd, tool_name, arg) then
+      return true
+   else
+      local msg = "'%s' program not found. Make sure %s is installed and is available in your PATH " ..
+                  "(or you may want to edit the 'variables.%s' value in file '%s')"
+      return nil, msg:format(tool_cmd, tool_name, tool_name:upper(), cfg.config_files.nearest)
+   end
+end
+
 return util
