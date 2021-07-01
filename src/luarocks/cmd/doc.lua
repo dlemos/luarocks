@@ -35,7 +35,7 @@ local function show_homepage(homepage, name, namespace, version)
       return nil, "No 'homepage' field in rockspec for "..util.format_rock_name(name, namespace, version)
    end
    util.printout("Opening "..homepage.." ...")
-   fs.browser(homepage)
+   fs.execute(cfg.web_browser, homepage)
    return true
 end
 
@@ -90,7 +90,7 @@ function doc.command(args)
    if not docdir then
       if descript.homepage and not args.list then
          util.printout("Local documentation directory not found -- opening "..descript.homepage.." ...")
-         fs.browser(descript.homepage)
+         fs.execute(cfg.web_browser, descript.homepage)
          return true
       end
       return nil, "Documentation directory not found for "..name.." "..version
@@ -135,7 +135,7 @@ function doc.command(args)
             util.printout()
             util.printout("Opening "..pathname.." ...")
             util.printout()
-            local ok = fs.browser(pathname)
+            local ok =  fs.execute(cfg.web_browser, pathname)
             if not ok and not pathname:match(htmlpatt) then
                local fd = io.open(pathname, "r")
                util.printout(fd:read("*a"))
