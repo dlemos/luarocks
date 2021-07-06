@@ -1,5 +1,5 @@
 local wrap_script = {}
-local fs = require("luarocks.fs")
+local fs = require("rocks.fs")
 
 local cfg = require("luarocks.core.cfg")
 local dir = require("luarocks.dir")

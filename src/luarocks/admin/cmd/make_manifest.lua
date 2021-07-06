@@ -8,7 +8,7 @@ local index = require("luarocks.admin.index")
 local cfg = require("luarocks.core.cfg")
 local util = require("luarocks.util")
 local deps = require("luarocks.deps")
-local fs = require("luarocks.fs")
+local fs = require("rocks.fs")
 local dir = require("luarocks.dir")
 
 function make_manifest.add_to_parser(parser)

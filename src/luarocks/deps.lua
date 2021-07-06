@@ -430,7 +430,7 @@ local function add_patterns_for_file(files, file, patterns)
 end
 
 local function check_external_dependency_at(prefix, name, ext_files, vars, dirs, err_files, cache)
-   local fs = require("luarocks.fs")
+   local fs = require("rocks.fs")
    cache = cache or {}
 
    for dirname, dirdata in util.sortedpairs(dirs) do

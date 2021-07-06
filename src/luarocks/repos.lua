@@ -2,7 +2,7 @@
 --- Functions for managing the repository on disk.
 local repos = {}
 
-local fs = require("luarocks.fs")
+local fs = require("rocks.fs")
 local path = require("luarocks.path")
 local cfg = require("luarocks.core.cfg")
 local util = require("luarocks.util")

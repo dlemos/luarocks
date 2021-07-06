@@ -1,7 +1,7 @@
 
 local busted = {}
 
-local fs = require("luarocks.fs")
+local fs = require("rocks.fs")
 local deps = require("luarocks.deps")
 local path = require("luarocks.path")
 local dir = require("luarocks.dir")

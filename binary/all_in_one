@@ -46,7 +46,7 @@ local CONFIG_DIR = TARGET_DIR .. "/.luarocks"
 
 package.path = "./src/?.lua;" .. package.path
 
-local fs = require("luarocks.fs")
+local fs = require("rocks.fs")
 local cfg = require("luarocks.core.cfg")
 local cmd = require("luarocks.cmd")
 local deps = require("luarocks.deps")

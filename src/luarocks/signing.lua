@@ -1,7 +1,7 @@
 local signing = {}
 
 local cfg = require("luarocks.core.cfg")
-local fs = require("luarocks.fs")
+local fs = require("rocks.fs")
 
 local function get_gpg()
    local vars = cfg.variables

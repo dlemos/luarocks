@@ -3,7 +3,7 @@
 local index = {}
 
 local util = require("luarocks.util")
-local fs = require("luarocks.fs")
+local fs = require("rocks.fs")
 local vers = require("luarocks.core.vers")
 local persist = require("luarocks.persist")
 local dir = require("luarocks.dir")

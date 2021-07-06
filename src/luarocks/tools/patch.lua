@@ -10,7 +10,7 @@
 
 local patch = {}
 
-local fs = require("luarocks.fs")
+local fs = require("rocks.fs")
 local fun = require("luarocks.fun")
 
 local io = io

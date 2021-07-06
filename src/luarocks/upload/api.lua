@@ -2,7 +2,7 @@
 local api = {}
 
 local cfg = require("luarocks.core.cfg")
-local fs = require("luarocks.fs")
+local fs = require("rocks.fs")
 local dir = require("luarocks.dir")
 local util = require("luarocks.util")
 local persist = require("luarocks.persist")

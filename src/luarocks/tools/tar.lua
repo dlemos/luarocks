@@ -2,7 +2,7 @@
 --- A pure-Lua implementation of untar (unpacking .tar archives)
 local tar = {}
 
-local fs = require("luarocks.fs")
+local fs = require("rocks.fs")
 local dir = require("luarocks.dir")
 local fun = require("luarocks.fun")
 

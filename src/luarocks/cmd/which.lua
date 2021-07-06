@@ -6,7 +6,7 @@ local which_cmd = {}
 local loader = require("luarocks.loader")
 local cfg = require("luarocks.core.cfg")
 local util = require("luarocks.util")
-local fs = require("luarocks.fs")
+local fs = require("rocks.fs")
 
 function which_cmd.add_to_parser(parser)
    local cmd = parser:command("which", 'Given a module name like "foo.bar", '..

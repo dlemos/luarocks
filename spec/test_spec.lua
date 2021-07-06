@@ -101,7 +101,7 @@ end)
 
 test_env.unload_luarocks()
 
-local fs = require("luarocks.fs")
+local fs = require("rocks.fs")
 local cfg = require("luarocks.core.cfg")
 local path = require("luarocks.path")
 local test = require("luarocks.test")

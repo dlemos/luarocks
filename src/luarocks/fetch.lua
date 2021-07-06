@@ -2,7 +2,7 @@
 --- Functions related to fetching and loading local and remote files.
 local fetch = {}
 
-local fs = require("luarocks.fs")
+local fs = require("rocks.fs")
 local dir = require("luarocks.dir")
 local rockspecs = require("luarocks.rockspecs")
 local signing = require("luarocks.signing")

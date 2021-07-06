@@ -4,7 +4,7 @@ local path = require("luarocks.path")
 local fetch = require("luarocks.fetch")
 local search = require("luarocks.search")
 local queries = require("luarocks.queries")
-local fs = require("luarocks.fs")
+local fs = require("rocks.fs")
 local dir = require("luarocks.dir")
 local util = require("luarocks.util")
 

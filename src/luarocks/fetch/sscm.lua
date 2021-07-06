@@ -2,7 +2,7 @@
 --- Fetch back-end for retrieving sources from Surround SCM Server
 local sscm = {}
 
-local fs = require("luarocks.fs")
+local fs = require("rocks.fs")
 local dir = require("luarocks.dir")
 
 --- Download sources via Surround SCM Server for building a rock.

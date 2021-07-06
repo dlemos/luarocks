@@ -3,7 +3,7 @@
 -- Adds a rock or rockspec to a rocks server.
 local cache = {}
 
-local fs = require("luarocks.fs")
+local fs = require("rocks.fs")
 local cfg = require("luarocks.core.cfg")
 local dir = require("luarocks.dir")
 local util = require("luarocks.util")

@@ -8,7 +8,7 @@ local git_repo = require("spec.util.git_repo")
 
 test_env.unload_luarocks()
 local cfg = require("luarocks.core.cfg")
-local fs = require("luarocks.fs")
+local fs = require("rocks.fs")
 
 local extra_rocks = {
    "/lmathx-20120430.51-1.src.rock",
@@ -560,7 +560,7 @@ test_env.unload_luarocks()
 test_env.setup_specs()
 local cfg = require("luarocks.core.cfg")
 local deps = require("luarocks.deps")
-local fs = require("luarocks.fs")
+local fs = require("rocks.fs")
 local path = require("luarocks.path")
 local rockspecs = require("luarocks.rockspecs")
 local build_builtin = require("luarocks.build.builtin")

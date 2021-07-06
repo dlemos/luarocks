@@ -6,7 +6,7 @@ local persist = {}
 local core = require("luarocks.core.persist")
 local util = require("luarocks.util")
 local dir = require("luarocks.dir")
-local fs = require("luarocks.fs")
+local fs = require("rocks.fs")
 
 persist.run_file = core.run_file
 persist.load_into_table = core.load_into_table

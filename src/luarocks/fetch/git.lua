@@ -4,7 +4,7 @@ local git = {}
 
 local unpack = unpack or table.unpack
 
-local fs = require("luarocks.fs")
+local fs = require("rocks.fs")
 local dir = require("luarocks.dir")
 local vers = require("luarocks.core.vers")
 local util = require("luarocks.util")

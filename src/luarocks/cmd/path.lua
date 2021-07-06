@@ -5,7 +5,7 @@ local path_cmd = {}
 
 local util = require("luarocks.util")
 local cfg = require("luarocks.core.cfg")
-local fs = require("luarocks.fs")
+local fs = require("rocks.fs")
 
 function path_cmd.add_to_parser(parser)
    local cmd = parser:command("path", [[

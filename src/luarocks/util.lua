@@ -59,7 +59,7 @@ end
 -- these function, erasing temporaries.
 -- Functions are executed in the inverse order they were scheduled.
 function util.run_scheduled_functions()
-   local fs = require("luarocks.fs")
+   local fs = require("rocks.fs")
    if fs.change_dir_to_root then
       fs.change_dir_to_root()
    end
@@ -270,7 +270,7 @@ end
 -- name and version in regular format.
 -- @param subdir string: path to subdirectory.
 local function collect_rockspecs(versions, paths, unnamed_paths, subdir)
-   local fs = require("luarocks.fs")
+   local fs = require("rocks.fs")
    local dir = require("luarocks.dir")
    local path = require("luarocks.path")
    local vers = require("luarocks.core.vers")
@@ -313,7 +313,7 @@ function util.get_default_rockspec()
          return unnamed_paths[1]
       end
    else
-      local fs = require("luarocks.fs")
+      local fs = require("rocks.fs")
       local dir = require("luarocks.dir")
       local basename = dir.base_name(fs.current_dir())
 
@@ -632,7 +632,7 @@ end
 
 function util.remove_doc_dir(name, version)
    local path = require("luarocks.path")
-   local fs = require("luarocks.fs")
+   local fs = require("rocks.fs")
    local dir = require("luarocks.dir")
 
    local install_dir = path.install_dir(name, version)

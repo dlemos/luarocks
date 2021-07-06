@@ -9,7 +9,7 @@ local search = require("luarocks.search")
 local path = require("luarocks.path")
 local dir = require("luarocks.dir")
 local fetch = require("luarocks.fetch")
-local fs = require("luarocks.fs")
+local fs = require("rocks.fs")
 local download = require("luarocks.download")
 
 function doc.add_to_parser(parser)

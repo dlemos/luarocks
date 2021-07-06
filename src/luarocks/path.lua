@@ -4,7 +4,7 @@
 -- point where the layout of the local installation is defined in LuaRocks.
 local path = {}
 
-local fs = require("luarocks.fs")
+local fs = require("rocks.fs")
 local core = require("luarocks.core.path")
 local dir = require("luarocks.dir")
 local cfg = require("luarocks.core.cfg")

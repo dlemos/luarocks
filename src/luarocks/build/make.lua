@@ -4,7 +4,7 @@ local make = {}
 
 local unpack = unpack or table.unpack
 
-local fs = require("luarocks.fs")
+local fs = require("rocks.fs")
 local util = require("luarocks.util")
 local cfg = require("luarocks.core.cfg")
 

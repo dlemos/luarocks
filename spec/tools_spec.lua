@@ -4,7 +4,7 @@ local testing_paths = test_env.testing_paths
 local write_file = test_env.write_file
 
 test_env.unload_luarocks()
-local fs = require("luarocks.fs")
+local fs = require("rocks.fs")
 local cfg = require("luarocks.core.cfg")
 local patch = require("luarocks.tools.patch")
 

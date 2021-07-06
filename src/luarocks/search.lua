@@ -62,7 +62,7 @@ function search.disk_search(repo, query, result_tree)
    assert(query:type() == "query")
    assert(type(result_tree) == "table" or not result_tree)
 
-   local fs = require("luarocks.fs")
+   local fs = require("rocks.fs")
 
    if not result_tree then
       result_tree = {}

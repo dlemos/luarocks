@@ -4,7 +4,7 @@
 local purge = {}
 
 local util = require("luarocks.util")
-local fs = require("luarocks.fs")
+local fs = require("rocks.fs")
 local path = require("luarocks.path")
 local search = require("luarocks.search")
 local vers = require("luarocks.core.vers")

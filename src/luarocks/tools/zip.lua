@@ -4,7 +4,7 @@
 local zip = {}
 
 local zlib = require("zlib")
-local fs = require("luarocks.fs")
+local fs = require("rocks.fs")
 local fun = require("luarocks.fun")
 local dir = require("luarocks.dir")
 

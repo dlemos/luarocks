@@ -7,7 +7,7 @@ local cfg = require("luarocks.core.cfg")
 local util = require("luarocks.util")
 local dir = require("luarocks.dir")
 local writer = require("luarocks.manif.writer")
-local fs = require("luarocks.fs")
+local fs = require("rocks.fs")
 local cache = require("luarocks.admin.cache")
 local index = require("luarocks.admin.index")
 

@@ -2,7 +2,7 @@
 local init = {}
 
 local cfg = require("luarocks.core.cfg")
-local fs = require("luarocks.fs")
+local fs = require("rocks.fs")
 local path = require("luarocks.path")
 local deps = require("luarocks.deps")
 local dir = require("luarocks.dir")

@@ -4,7 +4,7 @@
 local unpack = {}
 
 local fetch = require("luarocks.fetch")
-local fs = require("luarocks.fs")
+local fs = require("rocks.fs")
 local util = require("luarocks.util")
 local build = require("luarocks.build")
 local dir = require("luarocks.dir")

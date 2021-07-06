@@ -7,7 +7,7 @@ local cfg = require("luarocks.core.cfg")
 local util = require("luarocks.util")
 local deps = require("luarocks.deps")
 local dir = require("luarocks.dir")
-local fs = require("luarocks.fs")
+local fs = require("rocks.fs")
 
 function config_cmd.add_to_parser(parser)
    local cmd = parser:command("config", [[
