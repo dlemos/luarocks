@@ -497,7 +497,7 @@ function cmd.run_command(description, commands, external_namespace, ...)
    -- Preliminary initialization
    cfg.init()
 
-   fs.init()
+   fs.init({ "linux", "unix"})
 
    for _, module_name in ipairs(fs.modules(external_namespace)) do
       if not commands[module_name] then
@@ -589,7 +589,7 @@ function cmd.run_command(description, commands, external_namespace, ...)
 
    -- Now that the config is fully loaded, reinitialize fs using the full
    -- feature set.
-   fs.init()
+   fs.init({ "linux", "unix"})
 
    -- if the Lua interpreter wasn't explicitly found before cfg.init,
    -- try again now.
