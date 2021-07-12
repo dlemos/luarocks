@@ -8,7 +8,7 @@ local path = require("luarocks.path")
 local cfg = require("luarocks.core.cfg")
 local dir = require("luarocks.dir")
 local fun = require("luarocks.fun")
-local fs = require("luarocks.fs")
+local fs = require("rocks.fs")
 local argparse = require("luarocks.argparse")
 
 local unpack = table.unpack or unpack
