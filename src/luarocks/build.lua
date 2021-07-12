@@ -13,6 +13,7 @@ local vers = require("luarocks.core.vers")
 local repos = require("luarocks.repos")
 local writer = require("luarocks.manif.writer")
 local deplocks = require("luarocks.deplocks")
+local patch = require("rocks.patch")
 
 build.opts = util.opts_table("build.opts", {
    need_to_fetch = "boolean",
@@ -36,6 +37,16 @@ do
          local fd = io.open(dir.path(fs.current_dir(), name), "w+")
          fd:write(content)
          fd:close()
+      end
+   end
+
+   local function apply_patch(patchname, patchdata, create_delete)
+      local p, all_ok = patch.read_patch(patchname, patchdata)
+      if not all_ok then
+         return nil, "Failed reading patch "..patchname
+      end
+      if p then
+         return patch.apply_patch(p, 1, create_delete)
       end
    end
 
@@ -63,12 +74,12 @@ do
       end
       if rockspec.build.patches then
          extract_from_rockspec(rockspec.build.patches)
-         for patch, patchdata in util.sortedpairs(rockspec.build.patches) do
-            util.printout("Applying patch "..patch.."...")
+         for Patch, patchdata in util.sortedpairs(rockspec.build.patches) do
+            util.printout("Applying patch "..Patch.."...")
             local create_delete = rockspec:format_is_at_least("3.0")
-            local ok, err = fs.apply_patch(tostring(patch), patchdata, create_delete)
+            local ok, err = apply_patch(tostring(Patch), patchdata, create_delete)
             if not ok then
-               return nil, "Failed applying patch "..patch
+               return nil, "Failed applying patch "..Patch
             end
          end
       end
