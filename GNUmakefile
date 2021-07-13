@@ -145,13 +145,6 @@ install-binary: $(INSTALL_BINARY_FILES)
 	$(INSTALL) "$(buildbinarydir)/luarocks-admin.exe" "$(DESTDIR)$(bindir)/luarocks-admin"
 
 # ----------------------------------------
-# Bootstrap install
-# ----------------------------------------
-
-bootstrap: luarocks $(DESTDIR)$(luarocksconfdir)/config-$(LUA_VERSION).lua
-	./luarocks make --tree="$(DESTDIR)$(rocks_tree)"
-
-# ----------------------------------------
 # Windows binary build
 # ----------------------------------------
 
@@ -184,4 +177,4 @@ clean: windows-clean
 		./.luarocks \
 		./lua_modules
 
-.PHONY: all build install binary install-binary bootstrap clean windows-binary windows-clean
+.PHONY: all build install binary install-binary clean windows-binary windows-clean
