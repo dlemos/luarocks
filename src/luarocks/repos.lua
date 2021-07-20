@@ -24,6 +24,18 @@ local function get_provided_item(deploy_type, file_path)
    return item_type, item_name
 end
 
+--- Check whether a file is a Lua script
+-- When the file can be successfully compiled by the configured
+-- Lua interpreter, it's considered to be a valid Lua file.
+-- @param filename filename of file to check
+-- @return boolean true, if it is a Lua script, false otherwise
+local function is_lua(filename)
+   filename = filename:gsub([[%\]],"/")   -- normalize on fw slash to prevent escaping issues
+   local lua = fs.Q(dir.path(cfg.variables["LUA_BINDIR"], cfg.lua_interpreter))  -- get lua interpreter configured
+   -- execute on configured interpreter, might not be the same as the interpreter LR is run on
+   local result = fs.execute_string(lua..[[ -e "if loadfile(']]..filename..[[') then os.exit(0) else os.exit(1) end"]])
+   return (result == true)
+ end
 -- Tree of files installed by a package are stored
 -- in its rock manifest. Some of these files have to
 -- be deployed to locations where Lua can load them as
@@ -442,7 +454,7 @@ function repos.deploy_files(name, version, wrap_bin_scripts, deps_mode)
    local installs = {}
 
    local function install_binary(source, target)
-      if wrap_bin_scripts and fs.is_lua(source) then
+      if wrap_bin_scripts and is_lua(source) then
          return fs.wrap_script(source, target, deps_mode, name, version)
       else
          return fs.copy_binary(source, target)
@@ -470,7 +482,7 @@ function repos.deploy_files(name, version, wrap_bin_scripts, deps_mode)
          end
          local target = mode == "nv" and paths.nv or paths.v
          local backup = name ~= cur_name or version ~= cur_version
-         local realdst = (wrap_bin_scripts and fs.is_lua(source))
+         local realdst = (wrap_bin_scripts and is_lua(source))
                          and (target .. (cfg.wrapper_suffix or ""))
                          or target
          table.insert(installs, { fn = install_binary, src = source, dst = target, backup = backup, realdst = realdst })
@@ -685,18 +697,5 @@ function repos.delete_version(name, version, deps_mode, quick)
    local writer = require("luarocks.manif.writer")
    return writer.remove_from_manifest(name, version, nil, deps_mode)
 end
-
---- Check whether a file is a Lua script
--- When the file can be successfully compiled by the configured
--- Lua interpreter, it's considered to be a valid Lua file.
--- @param filename filename of file to check
--- @return boolean true, if it is a Lua script, false otherwise
-function repos.is_lua(filename)
-   filename = filename:gsub([[%\]],"/")   -- normalize on fw slash to prevent escaping issues
-   local lua = fs.Q(dir.path(cfg.variables["LUA_BINDIR"], cfg.lua_interpreter))  -- get lua interpreter configured
-   -- execute on configured interpreter, might not be the same as the interpreter LR is run on
-   local result = fs.execute_string(lua..[[ -e "if loadfile(']]..filename..[[') then os.exit(0) else os.exit(1) end"]])
-   return (result == true)
- end
 
 return repos
