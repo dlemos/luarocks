@@ -9,6 +9,7 @@ local dir = require("luarocks.dir")
 local util = require("luarocks.util")
 local persist = require("luarocks.persist")
 local write_rockspec = require("luarocks.cmd.write_rockspec")
+local wrap_script = require("luarocks.wrap_script")
 
 function init.add_to_parser(parser)
    local cmd = parser:command("init", "Initialize a directory for a Lua project using LuaRocks.", util.see_also())
@@ -145,7 +146,7 @@ function init.command(args)
    luarocks_wrapper = dir.path(".", luarocks_wrapper)
    if not fs.exists(luarocks_wrapper) then
       util.printout("Preparing " .. luarocks_wrapper .. " ...")
-      fs.wrap_script(arg[0], "luarocks", "none", nil, nil, "--project-tree", tree)
+      wrap_script.wrap(arg[0], "luarocks", "none", nil, nil, "--project-tree", tree)
    else
       util.printout(luarocks_wrapper .. " already exists. Not overwriting it!")
    end
@@ -164,7 +165,7 @@ function init.command(args)
       if util.check_lua_version(interp, cfg.lua_version) then
          util.printout("Preparing " .. lua_wrapper .. " for version " .. cfg.lua_version .. "...")
          path.use_tree(tree)
-         fs.wrap_script(nil, "lua", "all")
+         wrap_script.wrap(nil, "lua", "all")
       else
          util.warning("No Lua interpreter detected for version " .. cfg.lua_version .. ". Not creating " .. lua_wrapper)
       end

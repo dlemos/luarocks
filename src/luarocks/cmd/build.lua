@@ -146,7 +146,7 @@ function cmd_build.command(args)
       end)
    end
 
-   local ok, err = fs.check_command_permissions(args)
+   local ok, err = path.check_command_permissions(args)
    if not ok then
       return nil, err, cmd.errorcodes.PERMISSIONDENIED
    end

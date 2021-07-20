@@ -9,6 +9,7 @@ local util = require("luarocks.util")
 local dir = require("luarocks.dir")
 local manif = require("luarocks.manif")
 local vers = require("luarocks.core.vers")
+local wrap_script = require("luarocks.wrap_script")
 
 local unpack = unpack or table.unpack  -- luacheck: ignore 211
 
@@ -455,7 +456,7 @@ function repos.deploy_files(name, version, wrap_bin_scripts, deps_mode)
 
    local function install_binary(source, target)
       if wrap_bin_scripts and is_lua(source) then
-         return fs.wrap_script(source, target, deps_mode, name, version)
+         return wrap_script.wrap(source, target, deps_mode, name, version)
       else
          return fs.copy_binary(source, target)
       end
