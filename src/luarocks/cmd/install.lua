@@ -216,7 +216,7 @@ end
 -- @return boolean or (nil, string, exitcode): True if installation was
 -- successful, nil and an error message otherwise. exitcode is optionally returned.
 function install.command(args)
-   local ok, err = fs.check_command_permissions(args)
+   local ok, err = path.check_command_permissions(args)
    if not ok then return nil, err, cmd.errorcodes.PERMISSIONDENIED end
 
    if args.rock:match("%.rockspec$") or args.rock:match("%.src%.rock$") then

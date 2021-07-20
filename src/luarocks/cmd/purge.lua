@@ -48,7 +48,7 @@ function purge.command(args)
       return nil, "Directory not found: "..tree
    end
 
-   local ok, err = fs.check_command_permissions(args)
+   local ok, err = path.check_command_permissions(args)
    if not ok then return nil, err, cmd.errorcodes.PERMISSIONDENIED end
 
    search.local_manifest_search(results, path.rocks_dir(tree), queries.all())

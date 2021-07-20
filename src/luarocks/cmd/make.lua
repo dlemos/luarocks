@@ -15,6 +15,7 @@ local remove = require("luarocks.remove")
 local deps = require("luarocks.deps")
 local writer = require("luarocks.manif.writer")
 local cmd = require("luarocks.cmd")
+local path = require("luarocks.path")
 
 function make.cmd_options(parser)
    parser:flag("--no-install", "Do not install the rock.")
@@ -125,7 +126,7 @@ function make.command(args)
          return name, version
       end)
    else
-      local ok, err = fs.check_command_permissions(args)
+      local ok, err = path.check_command_permissions(args)
       if not ok then return nil, err, cmd.errorcodes.PERMISSIONDENIED end
       ok, err = build.build_rockspec(rockspec, opts)
       if not ok then return nil, err end
