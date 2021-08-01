@@ -44,7 +44,7 @@ local c_module_source = [[
 describe("LuaRocks build #integration", function()
    lazy_setup(function()
       cfg.init()
-      fs.init()
+      fs.init({"linux","unix"})
    end)
 
    before_each(function()

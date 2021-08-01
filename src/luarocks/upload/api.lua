@@ -155,7 +155,12 @@ function Api:request(url, params, post_params)
          return nil, "API failure: " .. redact_api_url(url)
       end
    else
-      local ok, err = fs.download(url, tmpfile)
+      local opts = {
+         filename = tmpfile,
+         connection_timeout = cfg.connection_timeout, 
+         user_agent = cfg.user_agent
+      }
+      local ok, err = fs.download(url, opts)
       if not ok then
          return nil, "API failure: " .. tostring(err) .. " - " .. redact_api_url(url)
       end

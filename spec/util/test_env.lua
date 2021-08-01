@@ -457,6 +457,7 @@ local function create_env(testing_paths)
    env_variables.LUA_PATH = env_variables.LUA_PATH .. testing_paths.testing_sys_tree .. "/share/lua/" .. luaversion_short .. "/?.lua;"
    env_variables.LUA_PATH = env_variables.LUA_PATH .. testing_paths.testing_sys_tree .. "/share/lua/".. luaversion_short .. "/?/init.lua;"
    env_variables.LUA_PATH = env_variables.LUA_PATH .. testing_paths.src_dir .. "/?.lua;"
+   env_variables.LUA_PATH = env_variables.LUA_PATH .. testing_paths.vendor_dir .. "/?.lua;"
    env_variables.LUA_CPATH = testing_paths.testing_tree .. "/lib/lua/" .. luaversion_short .. "/?." .. test_env.lib_extension .. ";"
                            .. testing_paths.testing_sys_tree .. "/lib/lua/" .. luaversion_short .. "/?." .. test_env.lib_extension .. ";"
    env_variables.PATH = os.getenv("PATH") .. ";" .. testing_paths.testing_tree .. "/bin;" .. testing_paths.testing_sys_tree .. "/bin;"
@@ -607,6 +608,7 @@ local function create_paths(luaversion_full)
    testing_paths.util_dir = base_dir .. "/spec/util"
    testing_paths.testrun_dir = base_dir .. "/testrun"
    testing_paths.src_dir = base_dir .. "/src"
+   testing_paths.vendor_dir = base_dir .. "/vendor"
    testing_paths.testing_lrprefix = testing_paths.testrun_dir .. "/testing_lrprefix-" .. luaversion_full
    testing_paths.testing_tree = testing_paths.testrun_dir .. "/testing-" .. luaversion_full
    testing_paths.testing_tree_copy = testing_paths.testrun_dir .. "/testing_copy-" .. luaversion_full
@@ -657,8 +659,8 @@ function test_env.setup_specs(extra_rocks)
       -- preload before meddling with package.path
       require("spec.util.git_repo")
 
-      package.path = test_env.env_variables.LUA_PATH
-      package.cpath = test_env.env_variables.LUA_CPATH
+      package.path = test_env.env_variables.LUA_PATH .. ";"..package.path
+      package.cpath = test_env.env_variables.LUA_CPATH..";"..package.cpath
 
       test_env.platform = execute_output(test_env.testing_paths.lua .. " -e \"cfg = require('luarocks.core.cfg'); cfg.init(); print(cfg.arch)\"", false, test_env.env_variables)
       test_env.wrapper_extension = test_env.TEST_TARGET_OS == "windows" and ".bat" or ""
@@ -947,6 +949,11 @@ function test_env.main()
    table.insert(rocks, "luacov")
    table.insert(rocks, "cluacov")
 
+   
+   --install rocks.fs
+   table.insert(urls, "dev/rocks-fs-dev-1.rockspec")
+   table.insert(rocks, "rocks-fs")
+   
    -- Download rocks needed for LuaRocks testing environment
    lfs.mkdir(testing_paths.testing_server)
    download_rocks(urls, testing_paths.testing_server)

@@ -1,0 +1,65 @@
+
+--2021-07-13 00:42:23--  https://luarocks.org/wsapi-1.6.1-1.src.rock
+Reusing existing connection to luarocks.org:443.
+HTTP request sent, awaiting response... 200 OK
+Length: 66793 (65K) [application/x-rock]
+Saving to: ‘/home/dsr/Development/luarocksDev/luarocks/testrun/testing_server-5.3/wsapi-1.6.1-1.src.rock’
+
+
+
+2021-07-13 00:42:24 (26.2 MB/s) - ‘/home/dsr/Development/luarocksDev/luarocks/testrun/testing_server-5.3/wsapi-1.6.1-1.src.rock’ saved [66793/66793]
+
+--2021-07-13 00:42:24--  https://luarocks.org/rings-1.3.0-1.src.rock
+Reusing existing connection to luarocks.org:443.
+HTTP request sent, awaiting response... 200 OK
+Length: 36009 (35K) [application/x-rock]
+Saving to: ‘/home/dsr/Development/luarocksDev/luarocks/testrun/testing_server-5.3/rings-1.3.0-1.src.rock’
+
+
+
+2021-07-13 00:42:24 (128 MB/s) - ‘/home/dsr/Development/luarocksDev/luarocks/testrun/testing_server-5.3/rings-1.3.0-1.src.rock’ saved [36009/36009]
+
+--2021-07-13 00:42:24--  https://luarocks.org/wsapi-xavante-1.6.1-1.src.rock
+Reusing existing connection to luarocks.org:443.
+HTTP request sent, awaiting response... 200 OK
+Length: 66732 (65K) [application/x-rock]
+Saving to: ‘/home/dsr/Development/luarocksDev/luarocks/testrun/testing_server-5.3/wsapi-xavante-1.6.1-1.src.rock’
+
+     0K .......... .......... .......... .......... .......... 76%  220M 0s
+    50K .......... .....                                      100%  239M=0s
+
+2021-07-13 01:08:07 (224 MB/s) - ‘/home/dsr/Development/luarocksDev/luarocks/testrun/testing_server-5.3/wsapi-xavante-1.6.1-1.src.rock’ saved [66732/66732]
+
+--2021-07-13 01:08:07--  https://luarocks.org/dkjson-2.5-2.src.rock
+Connecting to luarocks.org (luarocks.org)|45.33.61.132|:443... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 16589 (16K) [application/x-rock]
+Saving to: ‘/home/dsr/Development/luarocksDev/luarocks/testrun/testing_server-5.3/dkjson-2.5-2.src.rock’
+
+     0K .......... ......                                     100% 92.6M=0s
+
+2021-07-13 01:08:08 (92.6 MB/s) - ‘/home/dsr/Development/luarocksDev/luarocks/testrun/testing_server-5.3/dkjson-2.5-2.src.rock’ saved [16589/16589]
+
+--2021-07-13 01:08:08--  https://luarocks.org/restserver-0.1-1.src.rock
+Reusing existing connection to luarocks.org:443.
+HTTP request sent, awaiting response... 200 OK
+Length: 8708 (8.5K) [application/x-rock]
+Saving to: ‘/home/dsr/Development/luarocksDev/luarocks/testrun/testing_server-5.3/restserver-0.1-1.src.rock’
+
+     0K ........                                              100%  291M=0s
+
+2021-07-13 01:08:08 (291 MB/s) - ‘/home/dsr/Development/luarocksDev/luarocks/testrun/testing_server-5.3/restserver-0.1-1.src.rock’ saved [8708/8708]
+
+--2021-07-13 01:08:08--  https://luarocks.org/restserver-xavante-0.2-1.src.rock
+Reusing existing connection to luarocks.org:443.
+HTTP request sent, awaiting response... 200 OK
+Length: 9265 (9.0K) [application/x-rock]
+Saving to: ‘/home/dsr/Development/luarocksDev/luarocks/testrun/testing_server-5.3/restserver-xavante-0.2-1.src.rock’
+
+     0K .........                                             100% 90.1M=0s
+
+2021-07-13 01:08:09 (90.1 MB/s) - ‘/home/dsr/Development/luarocksDev/luarocks/testrun/testing_server-5.3/restserver-xavante-0.2-1.src.rock’ saved [9265/9265]
+
+FINISHED --2021-07-13 01:08:09--
+Total wall clock time: 25m 49s
+Downloaded: 11 files, 733K in 0.8s (903 KB/s)

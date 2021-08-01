@@ -14,6 +14,7 @@ local path = require("luarocks.path")
 local util = require("luarocks.util")
 local queries = require("luarocks.queries")
 local type_manifest = require("luarocks.type.manifest")
+local zip = require("rocks.zip")
 
 manif.cache_manifest = core.cache_manifest
 manif.load_rocks_tree_manifests = core.load_rocks_tree_manifests
@@ -121,7 +122,7 @@ function manif.load_manifest(repo_url, lua_version, versioned_only)
          local dirname = dir.dir_name(pathname)
          fs.change_dir(dirname)
          fs.delete(nozip)
-         local ok, err = fs.unzip(pathname)
+         local ok, err = zip.unzip(pathname)
          fs.pop_dir()
          if not ok then
             fs.delete(pathname)

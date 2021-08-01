@@ -9,6 +9,7 @@ local signing = require("luarocks.signing")
 local persist = require("luarocks.persist")
 local util = require("luarocks.util")
 local cfg = require("luarocks.core.cfg")
+local zip = require("rocks.zip")
 
 
 --- Fetch a local or remote file, using a local cache directory.
@@ -76,7 +77,13 @@ local function download_with_mirrors(url, filename, cache, servers)
 
    if not idx then
       -- URL is not from a rock server
-      return fs.download(url, filename, cache)
+      local opts = {
+         filename = filename, 
+         cache = cache, 
+         connection_timeout = cfg.connection_timeout, 
+         user_agent = cfg.user_agent
+      }
+      return fs.download(url, opts)
    end
 
    -- URL is from a rock server: try to download it falling back to mirrors.
@@ -86,7 +93,13 @@ local function download_with_mirrors(url, filename, cache, servers)
       if i > idx then
          util.warning("Failed downloading. Attempting mirror at " .. try_url)
       end
-      local ok, name, from_cache = fs.download(try_url, filename, cache)
+      local opts = {
+         filename = filename, 
+         cache = cache, 
+         connection_timeout = cfg.connection_timeout, 
+         user_agent = cfg.user_agent
+      }
+      local ok, name, from_cache = fs.download(try_url, opts)
       if ok then
          return ok, name, from_cache
       else
@@ -151,7 +164,13 @@ function fetch.fetch_url(url, filename, cache, mirroring)
       if mirroring ~= "no_mirror" then
          ok, name, from_cache = download_with_mirrors(url, filename, cache, cfg.rocks_servers)
       else
-         ok, name, from_cache = fs.download(url, filename, cache)
+         local opts = {
+            filename = filename, 
+            cache = cache, 
+            connection_timeout = cfg.connection_timeout, 
+            user_agent = cfg.user_agent
+         }
+         ok, name, from_cache = fs.download(url, opts)
       end
       if not ok then
          return nil, "Failed downloading "..url..(name and " - "..name or ""), "network"
@@ -320,7 +339,7 @@ function fetch.fetch_and_unpack_rock(url, dest, verify)
    end
    local ok, err = fs.change_dir(unpack_dir)
    if not ok then return nil, err end
-   ok, err = fs.unzip(rock_file)
+   ok, err = zip.unzip(rock_file)
    if not ok then
       return nil, "Failed unpacking rock file: " .. rock_file .. ": " .. err
    end
