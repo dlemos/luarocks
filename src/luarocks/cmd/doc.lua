@@ -11,6 +11,7 @@ local dir = require("luarocks.dir")
 local fetch = require("luarocks.fetch")
 local fs = require("rocks.fs")
 local download = require("luarocks.download")
+local cfg = require("luarocks.core.cfg")
 
 function doc.add_to_parser(parser)
    local cmd = parser:command("doc", "Show documentation for an installed rock.\n\n"..
