@@ -8,6 +8,7 @@ local rockspecs = require("luarocks.rockspecs")
 local signing = require("luarocks.signing")
 local persist = require("luarocks.persist")
 local util = require("luarocks.util")
+local archive = require("luarocks.archive")
 local cfg = require("luarocks.core.cfg")
 local zip = require("rocks.zip")
 
@@ -252,7 +253,7 @@ end
 function fetch.find_base_dir(file, temp_dir, src_url, src_dir)
    local ok, err = fs.change_dir(temp_dir)
    if not ok then return nil, err end
-   fs.unpack_archive(file)
+   archive.unpack_archive(file)
    local inferred_dir = src_dir or dir.deduce_base_dir(src_url)
    local found_dir = nil
    if fs.exists(inferred_dir) then
@@ -476,7 +477,7 @@ function fetch.get_sources(rockspec, extract, dest_dir)
    if extract then
       local ok, err = fs.change_dir(store_dir)
       if not ok then return nil, err end
-      ok, err = fs.unpack_archive(rockspec.source.file)
+      ok, err = archive.unpack_archive(rockspec.source.file)
       if not ok then return nil, err end
       if not fs.exists(rockspec.source.dir) then
 

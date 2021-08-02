@@ -9,6 +9,7 @@ local util = require("luarocks.util")
 local build = require("luarocks.build")
 local dir = require("luarocks.dir")
 local search = require("luarocks.search")
+local archive = require("luarocks.archive")
 
 function unpack.add_to_parser(parser)
    local cmd = parser:command("unpack", [[
@@ -80,7 +81,7 @@ local function unpack_rock(rock_file, dir_name, kind)
    end
    if kind == "src" then
       if rockspec.source.file then
-         local ok, err = fs.unpack_archive(rockspec.source.file)
+         local ok, err = archive.unpack_archive(rockspec.source.file)
          if not ok then
             return nil, err
          end

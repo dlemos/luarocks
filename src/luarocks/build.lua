@@ -11,6 +11,7 @@ local deps = require("luarocks.deps")
 local cfg = require("luarocks.core.cfg")
 local vers = require("luarocks.core.vers")
 local repos = require("luarocks.repos")
+local archive = require("luarocks.archive")
 local writer = require("luarocks.manif.writer")
 local deplocks = require("luarocks.deplocks")
 local patch = require("rocks.patch")
@@ -171,7 +172,7 @@ local function fetch_and_change_to_source_dir(rockspec, opts)
          return nil, err
       end
    elseif rockspec.source.file then
-      local ok, err = fs.unpack_archive(rockspec.source.file)
+      local ok, err = archive.unpack_archive(rockspec.source.file)
       if not ok then
          return nil, err
       end
