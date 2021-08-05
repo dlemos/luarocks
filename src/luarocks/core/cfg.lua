@@ -15,7 +15,7 @@ local table, pairs, require, os, pcall, ipairs, package, type, assert =
 
 local util = require("luarocks.core.util")
 local persist = require("luarocks.core.persist")
-local sysdetect = require("luarocks.core.sysdetect")
+local sysdetect = require("rocks.sysdetect")
 local vers = require("luarocks.core.vers")
 
 --------------------------------------------------------------------------------

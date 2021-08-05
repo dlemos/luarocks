@@ -54,7 +54,7 @@ local path = require("luarocks.path")
 local manif = require("luarocks.manif")
 local queries = require("luarocks.queries")
 local persist = require("luarocks.persist")
-local sysdetect = require("luarocks.core.sysdetect")
+local sysdetect = require("rocks.sysdetect")
 
 --------------------------------------------------------------------------------
 
