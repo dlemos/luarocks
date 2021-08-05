@@ -79,10 +79,13 @@ local function download_with_mirrors(url, filename, cache, servers)
    if not idx then
       -- URL is not from a rock server
       local opts = {
-         filename = filename, 
-         cache = cache, 
-         connection_timeout = cfg.connection_timeout, 
-         user_agent = cfg.user_agent
+         filename = filename,
+         cache = cache,
+         connection_timeout = cfg.connection_timeout,
+         user_agent = cfg.user_agent,
+         cache_timeout = cfg.cache_timeout,
+         cache_fail_timeout = cfg.cache_fail_timeout,
+         show_downloads = cfg.show_downloads
       }
       return fs.download(url, opts)
    end
@@ -95,10 +98,13 @@ local function download_with_mirrors(url, filename, cache, servers)
          util.warning("Failed downloading. Attempting mirror at " .. try_url)
       end
       local opts = {
-         filename = filename, 
-         cache = cache, 
-         connection_timeout = cfg.connection_timeout, 
-         user_agent = cfg.user_agent
+         filename = filename,
+         cache = cache,
+         connection_timeout = cfg.connection_timeout,
+         user_agent = cfg.user_agent,
+         cache_timeout = cfg.cache_timeout,
+         cache_fail_timeout = cfg.cache_fail_timeout,
+         show_downloads = cfg.show_downloads
       }
       local ok, name, from_cache = fs.download(try_url, opts)
       if ok then
@@ -166,10 +172,13 @@ function fetch.fetch_url(url, filename, cache, mirroring)
          ok, name, from_cache = download_with_mirrors(url, filename, cache, cfg.rocks_servers)
       else
          local opts = {
-            filename = filename, 
-            cache = cache, 
-            connection_timeout = cfg.connection_timeout, 
-            user_agent = cfg.user_agent
+            filename = filename,
+            cache = cache,
+            connection_timeout = cfg.connection_timeout,
+            user_agent = cfg.user_agent,
+            cache_timeout = cfg.cache_timeout,
+            cache_fail_timeout = cfg.cache_fail_timeout,
+            show_downloads = cfg.show_downloads
          }
          ok, name, from_cache = fs.download(url, opts)
       end
