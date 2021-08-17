@@ -9,6 +9,7 @@ local fs = require("rocks.fs")
 local path = require("luarocks.path")
 local rockspecs = require("luarocks.rockspecs")
 local lfs = require("lfs")
+local sysdetect = require("rocks.sysdetect")
 local get_tmp_path = test_env.get_tmp_path
 local testing_paths = test_env.testing_paths
 local write_file = test_env.write_file
@@ -22,7 +23,16 @@ describe("luarocks fetch #unit #mock", function()
 
    setup(function()
       cfg.init()
-      fs.init()
+
+      local plats = {}
+      local sys, _ = sysdetect.detect()
+      if cfg.platform_sets[sys] then
+         for platforms, _ in pairs(cfg.platform_sets[sys]) do
+               plats[#plats+1] = platforms
+         end
+      end
+      fs.init(plats)
+
       test_env.mock_server_init()
 
       runner = require("luacov.runner")

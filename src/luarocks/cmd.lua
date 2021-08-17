@@ -10,6 +10,7 @@ local dir = require("luarocks.dir")
 local fun = require("luarocks.fun")
 local fs = require("rocks.fs")
 local argparse = require("luarocks.argparse")
+local sysdetect = require("rocks.sysdetect")
 
 local unpack = table.unpack or unpack
 local pack = table.pack or function(...) return { n = select("#", ...), ... } end
@@ -500,7 +501,15 @@ function cmd.run_command(description, commands, external_namespace, ...)
    -- Preliminary initialization
    cfg.init()
 
-   fs.init({ "linux", "unix"})
+   local plats = {}
+   local sys, _ = sysdetect.detect()
+   if cfg.platform_sets[sys] then
+      for platforms, _ in pairs(cfg.platform_sets[sys]) do
+            plats[#plats+1] = platforms
+      end
+   end
+
+   fs.init(plats)
 
    for _, module_name in ipairs(fs.modules(external_namespace)) do
       if not commands[module_name] then
@@ -592,7 +601,15 @@ function cmd.run_command(description, commands, external_namespace, ...)
 
    -- Now that the config is fully loaded, reinitialize fs using the full
    -- feature set.
-   fs.init({ "linux", "unix"})
+   local plats = {}
+   local sys, _ = sysdetect.detect()
+   if cfg.platform_sets[sys] then
+      for platforms, _ in pairs(cfg.platform_sets[sys]) do
+            plats[#plats+1] = platforms
+      end
+   end
+
+   fs.init(plats)
 
    -- if the Lua interpreter wasn't explicitly found before cfg.init,
    -- try again now.

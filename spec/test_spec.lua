@@ -84,17 +84,17 @@ describe("luarocks test #integration", function()
          assert.is_true(run.luarocks_bool("unpack busted_project-0.1-1.src.rock"))
          lfs.chdir("busted_project-0.1-1/busted_project")
          assert.is_true(run.luarocks_bool("make"))
-         
+
          run.luarocks_bool("remove busted")
          local prepareOutput = run.luarocks_bool("test --prepare")
          assert.is_true(run.luarocks_bool("show busted"))
-          
+
          -- Assert that "test --prepare" run successfully
          assert.is_true(prepareOutput)
 
          local output = run.luarocks("test")
          assert.not_match(tostring(prepareOutput), output)
-         
+
       end)
    end)
 end)
@@ -107,13 +107,23 @@ local path = require("luarocks.path")
 local test = require("luarocks.test")
 local test_busted = require("luarocks.test.busted")
 local test_command = require("luarocks.test.command")
+local sysdetect = require("rocks.sysdetect")
 
 describe("LuaRocks test #unit", function()
    local runner
 
    lazy_setup(function()
       cfg.init()
-      fs.init()
+
+      local plats = {}
+      local sys, _ = sysdetect.detect()
+      if cfg.platform_sets[sys] then
+         for platforms, _ in pairs(cfg.platform_sets[sys]) do
+               plats[#plats+1] = platforms
+         end
+      end
+      fs.init(plats)
+
       runner = require("luacov.runner")
       runner.init(testing_paths.testrun_dir .. "/luacov.config")
       runner.tick = true

@@ -9,6 +9,7 @@ local git_repo = require("spec.util.git_repo")
 test_env.unload_luarocks()
 local cfg = require("luarocks.core.cfg")
 local fs = require("rocks.fs")
+local sysdetect = require("rocks.sysdetect")
 
 local extra_rocks = {
    "/lmathx-20120430.51-1.src.rock",
@@ -44,7 +45,16 @@ local c_module_source = [[
 describe("LuaRocks build #integration", function()
    lazy_setup(function()
       cfg.init()
-      fs.init({"linux","unix"})
+
+      local plats = {}
+      local sys, _ = sysdetect.detect()
+      if cfg.platform_sets[sys] then
+         for platforms, _ in pairs(cfg.platform_sets[sys]) do
+               plats[#plats+1] = platforms
+         end
+      end
+
+      fs.init(plats)
    end)
 
    before_each(function()
@@ -573,7 +583,16 @@ describe("LuaRocks build #unit", function()
       runner.init(testing_paths.testrun_dir .. "/luacov.config")
       runner.tick = true
       cfg.init()
-      fs.init()
+
+      local plats = {}
+      local sys, _ = sysdetect.detect()
+      if cfg.platform_sets[sys] then
+         for platforms, _ in pairs(cfg.platform_sets[sys]) do
+               plats[#plats+1] = platforms
+         end
+      end
+      fs.init(plats)
+
       deps.check_lua_incdir(cfg.variables)
       deps.check_lua_libdir(cfg.variables)
    end)
