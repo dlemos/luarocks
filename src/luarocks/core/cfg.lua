@@ -538,8 +538,6 @@ end
 
 local cfg = {}
 
-cfg.platform_sets = platform_sets
-
 --- Initializes the LuaRocks configuration for variables, paths
 -- and OS detection.
 -- @param detected table containing information detected about the
@@ -598,7 +596,7 @@ function cfg.init(detected, warning)
    end
 
    cfg.init = init
-
+   cfg.platform_sets = platform_sets
    ----------------------------------------
    -- System detection.
    ----------------------------------------
