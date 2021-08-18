@@ -121,11 +121,9 @@ function Api:request(url, params, post_params)
    local json_ok, json = util.require_json()
    if not json_ok then return nil, "A JSON library is required for this command. "..json end
 
-   if fs.which_tool("downloader") == "wget" then
-      local curl_ok, err = fs.is_tool_available(vars.CURL, "curl")
-      if not curl_ok then
-         return nil, err
-      end
+   local curl_ok, err = fs.is_tool_available(vars.CURL, "curl")
+   if not curl_ok then
+      return nil, err
    end
 
    if not self.config.key then
@@ -157,7 +155,7 @@ function Api:request(url, params, post_params)
    else
       local opts = {
          filename = tmpfile,
-         connection_timeout = cfg.connection_timeout, 
+         connection_timeout = cfg.connection_timeout,
          user_agent = cfg.user_agent
       }
       local ok, err = fs.download(url, opts)
