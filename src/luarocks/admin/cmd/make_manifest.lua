@@ -9,6 +9,7 @@ local cfg = require("luarocks.core.cfg")
 local util = require("luarocks.util")
 local deps = require("luarocks.deps")
 local fs = require("rocks.fs")
+local zip = require("rocks.zip")
 local dir = require("luarocks.dir")
 
 function make_manifest.add_to_parser(parser)
@@ -42,6 +43,13 @@ function make_manifest.command(args)
    if args.local_tree then
       for luaver in util.lua_versions() do
          fs.delete(dir.path(repo, "manifest-"..luaver))
+      end
+   else
+      for luaver in util.lua_versions() do
+         local name = dir.path(repo, "manifest-"..luaver)
+         if fs.exists(name) then
+            zip.zip(name .. ".zip", name)
+         end
       end
    end
    return ok, err
