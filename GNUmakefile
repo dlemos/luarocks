@@ -23,7 +23,7 @@ all: build
 # Base build
 # ----------------------------------------
 
-build: luarocks luarocks-admin $(builddir)/luarocks $(builddir)/luarocks-admin
+build: $(builddir)/luarocks $(builddir)/luarocks-admin $(builddir)/config-$(LUA_VERSION).lua
 
 config.unix:
 	@echo Please run the "./configure" script before building.
@@ -45,21 +45,6 @@ $(builddir)/config-$(LUA_VERSION).lua: config.unix
 	"$$([ -n "$(LUA_LIBDIR)" ] && printf '   LUA_LIBDIR = "%s";\\n' "$(LUA_LIBDIR)")"\
 	'}\n'\
 	> $@
-
-luarocks: config.unix $(builddir)/config-$(LUA_VERSION).lua
-	mkdir -p .luarocks
-	cp $(builddir)/config-$(LUA_VERSION).lua .luarocks/config-$(LUA_VERSION).lua
-	rm -f src/luarocks/core/hardcoded.lua
-	echo "#!/bin/sh" > luarocks
-	echo 'LUAROCKS_SYSCONFDIR="$(luarocksconfdir)" exec "$(LUA)" -e "package.path = \"$(CURDIR)/src/?.lua;\" .. package.path" "$(CURDIR)/src/bin/luarocks" --project-tree="$(CURDIR)/lua_modules" "$$@"' >> luarocks
-	chmod +rx ./luarocks
-	./luarocks init
-
-luarocks-admin: config.unix
-	rm -f src/luarocks/core/hardcoded.lua
-	echo "#!/bin/sh" > luarocks-admin
-	echo 'LUAROCKS_SYSCONFDIR="$(luarocksconfdir)" exec "$(LUA)" -e "package.path = \"$(CURDIR)/src/?.lua;\" .. package.path" "$(CURDIR)/src/bin/luarocks-admin" --project-tree="$(CURDIR)/lua_modules" "$$@"' >> luarocks-admin
-	chmod +rx ./luarocks-admin
 
 $(builddir)/luarocks: src/bin/luarocks config.unix
 	mkdir -p "$(@D)"
