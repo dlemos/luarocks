@@ -3,15 +3,6 @@ language: python
 cache:
   directories:
   - lua_install
-  - testrun/testing_cache-5.1
-  - testrun/testing_cache-5.2
-  - testrun/testing_cache-5.3
-  - testrun/testing_cache-2.1
-  - testrun/testing_server-5.1
-  - testrun/testing_server-5.2
-  - testrun/testing_server-5.3
-  - testrun/testing_server-2.1
-  - testrun/binary-samples
 
 smoke_script: &smoke_script
   - export BRANCH=$(if [ "$TRAVIS_PULL_REQUEST" == "false" ]; then echo $TRAVIS_BRANCH; else echo $TRAVIS_PULL_REQUEST_BRANCH; fi)
@@ -22,8 +13,7 @@ lint_script: &lint_script
   - luacheck .
 
 unit_script: &unit_script
-  - busted -o htest --exclude-tags=git,integration --verbose -Xhelper "lua_dir=$PWD/lua_install,travis"
-  - busted -o htest --exclude-tags=git,integration --verbose -Xhelper "lua_dir=$PWD/lua_install,travis,env=full"
+  - busted -o htest --exclude-tags=git --verbose spec/unit
 
 integration_script: &integration_script
   - lua -v
@@ -31,8 +21,7 @@ integration_script: &integration_script
   - ./configure --with-lua=lua_install
   - ./makedist dev
   - ./smoke_test.sh luarocks-dev.tar.gz
-  - busted -o htest --exclude-tags=gpg,git,unit --verbose -Xhelper "lua_dir=$PWD/lua_install,travis"
-  - busted -o htest --exclude-tags=gpg,git,unit --verbose -Xhelper "lua_dir=$PWD/lua_install,travis,env=full"
+  - busted -o htest --exclude-tags=gpg,git --verbose spec/integration
 
 jobs:
   include:
@@ -161,9 +150,9 @@ install:
   - luarocks install busted-htest
 
 after_success:
-  - luacov -c $TRAVIS_BUILD_DIR/testrun/luacov.config
-  - cd $TRAVIS_BUILD_DIR/testrun/ && bash <(curl -s https://codecov.io/bash)
-  - grep "Summary" -B1 -A1000 $TRAVIS_BUILD_DIR/testrun/luacov.report.out
+  - luacov -c $TRAVIS_BUILD_DIR/luacov.config
+  - cd $TRAVIS_BUILD_DIR/ && bash <(curl -s https://codecov.io/bash)
+  - grep "Summary" -B1 -A1000 $TRAVIS_BUILD_DIR/luacov.report.out
 
 notifications:
   email:

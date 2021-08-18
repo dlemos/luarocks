@@ -13,66 +13,67 @@ environment:
   - LUAV: "5.1"
     LUAT: "lua"
     COMPILER: "vs"
-    FILES: ""
-    EXCLUDE: "integration"
+    FILES: "spec/unit"
   - LUAV: "5.1"
     LUAT: "lua"
     COMPILER: "vs"
-    FILES: ""
-    EXCLUDE: "unit"
+    FILES: "spec/integration"
   - LUAV: "5.1"
     LUAT: "lua"
     COMPILER: "mingw"
-    FILES: "spec//build_spec.lua"
-    EXCLUDE: ""
-  # Lua 5.2 tests  
+    FILES: "spec/integration/build_spec.lua"
+  # Lua 5.2 tests
   - LUAV: "5.2"
     LUAT: "lua"
     COMPILER: "vs"
-    FILES: ""
-    EXCLUDE: "integration"
+    FILES: "spec/unit"
   - LUAV: "5.2"
     LUAT: "lua"
     COMPILER: "vs"
-    FILES: ""
-    EXCLUDE: "unit"
+    FILES: "spec/integration"
   - LUAV: "5.2"
     LUAT: "lua"
     COMPILER: "mingw"
-    FILES: "spec//build_spec.lua"
-    EXCLUDE: ""
+    FILES: "spec/integration/build_spec.lua"
   # Lua 5.3 tests
   - LUAV: "5.3"
     LUAT: "lua"
     COMPILER: "vs"
-    FILES: ""
-    EXCLUDE: "integration"
+    FILES: "spec/unit"
   - LUAV: "5.3"
     LUAT: "lua"
     COMPILER: "vs"
-    FILES: ""
-    EXCLUDE: "unit"
+    FILES: "spec/integration"
   - LUAV: "5.3"
     LUAT: "lua"
     COMPILER: "mingw"
-    FILES: "spec//build_spec.lua"
-    EXCLUDE: ""
+    FILES: "spec/integration/build_spec.lua"
+  # Lua 5.4 tests
+  - LUAV: "5.4"
+    LUAT: "lua"
+    COMPILER: "vs"
+    FILES: "spec/unit"
+  - LUAV: "5.4"
+    LUAT: "lua"
+    COMPILER: "vs"
+    FILES: "spec/integration"
+  - LUAV: "5.4"
+    LUAT: "lua"
+    COMPILER: "mingw"
+    FILES: "spec/integration/build_spec.lua"
   # LuaJIT 2.1 tests
   - LUAV: "2.1"
     LUAT: "luajit"
     COMPILER: "vs"
-    FILES: ""
-    EXCLUDE: "integration"
+    FILES: "spec/unit"
   - LUAV: "2.1"
     LUAT: "luajit"
     COMPILER: "vs"
-    FILES: ""
-    EXCLUDE: "unit"
+    FILES: "spec/integration"
   - LUAV: "2.1"
     LUAT: "luajit"
     COMPILER: "mingw"
-    FILES: "spec//build_spec.lua"
-    EXCLUDE: ""
+    FILES: "spec/integration/build_spec.lua"
 
 init:
 # Setup Lua development/build environment
@@ -93,24 +94,17 @@ build_script:
   - luarocks install busted-htest 1> NUL 2> NUL
 
 test_script:
-  - busted -o htest -v --lpath=.//?.lua --exclude-tags=ssh,unix,%EXCLUDE% -Xhelper lua_dir=%CD%\lua_install-%LUAV%,appveyor,%COMPILER% %FILES%
+  - busted -o htest -v --lpath=.//?.lua --exclude-tags=ssh,unix -Xhelper %FILES%
 
 after_test:
   - pip install codecov
-  - luacov -c testrun/luacov.config
-  - cd testrun && codecov -f luacov.report.out -X gcov
+  - luacov -c luacov.config
+  - codecov -f luacov.report.out -X gcov
 
 cache:
   - lua_install-5.1
   - lua_install-5.2
   - lua_install-5.3
+  - lua_install-5.4
   - lua_install-2.1
-  - testrun/testing_cache-5.1
-  - testrun/testing_cache-5.2
-  - testrun/testing_cache-5.3
-  - testrun/testing_cache-2.1
-  - testrun/testing_server-5.1
-  - testrun/testing_server-5.2
-  - testrun/testing_server-5.3
-  - testrun/testing_server-2.1
-  - testrun/binary-samples
+
