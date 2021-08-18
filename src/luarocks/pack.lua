@@ -15,6 +15,7 @@ local dir = require("luarocks.dir")
 local manif = require("luarocks.manif")
 local search = require("luarocks.search")
 local signing = require("luarocks.signing")
+local zip = require("rocks.zip")
 
 --- Create a source rock.
 -- Packages a rockspec and its required source files in a rock
@@ -50,7 +51,7 @@ function pack.pack_source_rock(rockspec_file)
 
    fs.delete(rock_file)
    fs.copy(rockspec_file, source_dir, "read")
-   ok, err = fs.zip(rock_file, dir.base_name(rockspec_file), dir.base_name(source_file))
+   ok, err = zip.zip(rock_file, dir.base_name(rockspec_file), dir.base_name(source_file))
    if not ok then
       return nil, "Failed packing "..rock_file.." - "..err
    end
@@ -124,7 +125,7 @@ function pack.pack_installed_rock(query, tree)
       rock_file = rock_file:gsub("%."..cfg.arch:gsub("%-","%%-").."%.", ".all.")
    end
    fs.delete(rock_file)
-   if not fs.zip(rock_file, unpack(fs.list_dir())) then
+   if not zip.zip(rock_file, unpack(fs.list_dir())) then
       return nil, "Failed packing "..rock_file
    end
    fs.pop_dir()
