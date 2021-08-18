@@ -26,8 +26,62 @@ repository = {
          }
       }
    },
+   build_only_deps = {
+      ["0.1-1"] = {
+         {
+            arch = "rockspec"
+         },
+         {
+            arch = "src"
+         }
+      }
+   },
    busted_project = {
       ["0.1-1"] = {
+         {
+            arch = "src"
+         },
+         {
+            arch = "rockspec"
+         }
+      }
+   },
+   depends_on_rock2 = {
+      ["1.0-1"] = {
+         {
+            arch = "src"
+         },
+         {
+            arch = "rockspec"
+         }
+      }
+   },
+   for_lua_version = {
+      ["1.5.1-1"] = {
+         {
+            arch = "src"
+         },
+         {
+            arch = "rockspec"
+         }
+      },
+      ["1.5.2-1"] = {
+         {
+            arch = "rockspec"
+         },
+         {
+            arch = "src"
+         }
+      },
+      ["1.5.3-1"] = {
+         {
+            arch = "src"
+         },
+         {
+            arch = "rockspec"
+         }
+      },
+      ["1.5.4-1"] = {
          {
             arch = "src"
          },
@@ -59,8 +113,56 @@ repository = {
          }
       }
    },
+   has_doc = {
+      ["1.0-1"] = {
+         {
+            arch = "rockspec"
+         },
+         {
+            arch = "src"
+         }
+      }
+   },
+   has_folder = {
+      ["1.0-1"] = {
+         {
+            arch = "rockspec"
+         },
+         {
+            arch = "src"
+         }
+      }
+   },
    has_namespaced_dep = {
       ["1.0-1"] = {
+         {
+            arch = "rockspec"
+         },
+         {
+            arch = "src"
+         }
+      }
+   },
+   has_script = {
+      ["1.0-1"] = {
+         {
+            arch = "src"
+         },
+         {
+            arch = "rockspec"
+         }
+      }
+   },
+   non_lua_file = {
+      ["1.0-1"] = {
+         {
+            arch = "rockspec"
+         },
+         {
+            arch = "src"
+         }
+      },
+      ["1.0-2"] = {
          {
             arch = "rockspec"
          },

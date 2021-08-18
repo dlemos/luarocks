@@ -1,6 +1,6 @@
 local git_repo = {}
 
-local test_env = require("spec.util.test_env")
+local helper = require("spec.util.helper")
 local lfs = require("lfs")
 
 local files = {
@@ -70,29 +70,29 @@ function git_repo.start()
    return handling {
       try = function()
          local pidfile = os.tmpname()
-         local basedir = test_env.testing_paths.testrun_dir .. "/git_repo"
+         local basedir = dir .. "/git_repo"
          local repodir = basedir .. "/testrock"
-         test_env.remove_dir(basedir)
+         helper.remove_dir(basedir)
          lfs.mkdir(basedir)
          lfs.mkdir(repodir)
          lfs.chdir(repodir)
-         assert(test_env.execute("git init"))
+         os.execute("git init")
          for name, contents in pairs(files) do
             write_file(name, contents)
-            test_env.execute("git add " .. name)
+            os.execute("git add " .. name)
          end
-         assert(test_env.execute("git commit -a -m 'initial commit'"))
-         assert(test_env.execute("git branch test-branch"))
+         os.execute("git commit -a -m 'initial commit'")
+         os.execute("git branch test-branch")
          print("git daemon --reuseaddr --pid-file="..pidfile.." --base-path="..basedir.." --export-all "..repodir.." &")
-         assert(test_env.execute("git daemon --reuseaddr --pid-file="..pidfile.." --base-path="..basedir.." --export-all "..repodir.." &"))
-         assert(test_env.execute("sleep 0.1; netstat -ln | grep '0.0.0.0:9418 .* LISTEN'"))
+         os.execute("git daemon --reuseaddr --pid-file="..pidfile.." --base-path="..basedir.." --export-all "..repodir.." &")
+         os.execute("sleep 0.1; netstat -ln | grep '0.0.0.0:9418 .* LISTEN'")
          return {
             stop = function()
                local fd = io.open(pidfile)
                local pid = fd:read("*a")
                fd:close()
-               assert(test_env.execute("kill -HUP " .. pid))
-               test_env.remove_dir(basedir)
+               os.execute("kill -HUP " .. pid)
+               helper.remove_dir(basedir)
             end
          }
       end,
