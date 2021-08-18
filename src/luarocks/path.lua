@@ -269,6 +269,7 @@ function path.check_command_permissions(args)
    local ok = true
    local err = ""
    for _, directory in ipairs { cfg.rocks_dir, cfg.deploy_lua_dir, cfg.deploy_bin_dir, cfg.deploy_lua_dir } do
+      directory = fs.absolute_name(directory)
       if fs.exists(directory) then
          if not fs.is_writable(directory) then
             ok = false
