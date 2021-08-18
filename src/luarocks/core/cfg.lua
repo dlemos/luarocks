@@ -225,7 +225,6 @@ local function make_defaults(lua_version, target_cpu, platforms, home)
          GPG = "gpg",
 
          RSYNC = "rsync",
-         WGET = "wget",
          SCP = "scp",
          CURL = "curl",
 
@@ -256,7 +255,6 @@ local function make_defaults(lua_version, target_cpu, platforms, home)
 
          RSYNCFLAGS = "--exclude=.git -Oavz",
          CURLNOCERTFLAG = "",
-         WGETNOCERTFLAG = "",
       },
 
       external_deps_subdirs = {
@@ -517,7 +515,6 @@ local function use_defaults(cfg, defaults)
    -- FIXME get rid of this
    if not cfg.check_certificates then
       cfg.variables.CURLNOCERTFLAG = "-k"
-      cfg.variables.WGETNOCERTFLAG = "--no-check-certificate"
    end
 end
 
@@ -749,7 +746,7 @@ function cfg.init(detected, warning)
    local defaults = make_defaults(cfg.lua_version, processor, platforms, cfg.home)
 
    if platforms.windows and hardcoded.WIN_TOOLS then
-      local tools = { "SEVENZ", "CP", "FIND", "LS", "MD5SUM", "PWD", "RMDIR", "WGET", "MKDIR" }
+      local tools = { "SEVENZ", "CP", "FIND", "LS", "MD5SUM", "PWD", "RMDIR", "MKDIR" }
       for _, tool in ipairs(tools) do
          defaults.variables[tool] = '"' .. hardcoded.WIN_TOOLS .. "/" .. defaults.variables[tool] .. '.exe"'
       end
