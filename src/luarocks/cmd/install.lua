@@ -14,6 +14,7 @@ local search = require("luarocks.search")
 local queries = require("luarocks.queries")
 local cfg = require("luarocks.core.cfg")
 local cmd = require("luarocks.cmd")
+local dir = require("luarocks.dir")
 
 function install.add_to_parser(parser)
    local cmd = parser:command("install", "Install a rock.", util.see_also())  -- luacheck: ignore 431
@@ -156,15 +157,17 @@ function install.install_binary_rock_deps(rock_file, opts)
 
    local install_dir = path.install_dir(name, version)
 
-   local ok, err, errcode = fetch.fetch_and_unpack_rock(rock_file, install_dir, opts.verify)
-   if not ok then return nil, err, errcode end
+   local tmp_dir, err, errcode = fetch.fetch_and_unpack_rock(rock_file, nil, opts.verify)
+   if not tmp_dir then return nil, err, errcode end
 
-   local rockspec, err = fetch.load_rockspec(path.rockspec_file(name, version))
+   local rockspec_filename = dir.path(tmp_dir, name .. "-" .. version .. ".rockspec")
+   local rockspec, err = fetch.load_rockspec(rockspec_filename)
    if err then
-      return nil, "Failed loading rockspec for installed package: "..err, errcode
+      return nil, "Failed loading rockspec: "..err, errcode
    end
 
-   ok, err, errcode = deps.fulfill_dependencies(rockspec, "dependencies", opts.deps_mode, opts.verify, install_dir)
+   local ok
+   ok, err, errcode = deps.fulfill_dependencies(rockspec, "dependencies", opts.deps_mode, opts.verify, tmp_dir)
    if err then return nil, err, errcode end
 
    util.printout()
